@@ -1,0 +1,52 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Edward Ciafardini
+	email = Esciafardini@gmail.com
+[core]
+	editor = code --wait
+	excludesfile = /Users/edwardciafardini/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/edwardciafardini/.stCommitMsg
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[merge]
+	ff = false
+[alias]
+	s = status
+	sw = switch
+	sh = stash
+	l = log --oneline
+	o = !git --no-pager log --oneline
+	ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+	b = branch
+	d = diff
+	rb = rebase
+	rbi = rebase --interactive @{upstream}
+	rewrite = commit --amend --message
+	log-my-week = !git log --author $(git config user.email) --since "1 week ago"	log-graph = log --graph --all  --decorate --oneline
+	a = add
+	cm = commit -m
+	ta = tag -a
+	uncommit = reset --soft HEAD~1
+	cleanout = !git clean -df && git checkout -- .
+	grep-group =  grep --break --heading --line-number
+	grep-all = !"git rev-list --all | xargs git grep '$1'"
+	ps = push
+	pl = pull
+	dd = diff --check --dirstat --find-copies --find-renames --histogram --color
+	snapshot = !git stash push "snapshot: $(date)" && git stash apply "stash@{0}"
+	archive = !"f() { top=$(rev-parse --show-toplevel); cd $top; tar cvf $top.tar $top ; }; f"
+	incoming = !git remote update --prune; git log ..@{upstream}
+	outgoing = log @{upstream}..
+	branches = branch -a
+	stashes = stash list
+	tags = tag -n1 --list
+

@@ -19,6 +19,8 @@
 	ui = auto
 [merge]
 	ff = false
+[pull]
+        rebase = true
 [alias]
 	s = status
 	sw = switch

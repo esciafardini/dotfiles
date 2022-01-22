@@ -13,10 +13,6 @@
 (fset 'copy-up-to-end-of-line
    (kmacro-lambda-form [?y ?$] 0 "%d"))
 
-;;Macro For Cider Eval End Of Fn
-(fset 'eval-cider-from-last-line
-      (kmacro-lambda-form [?A ?\C-x ?\C-e escape] 0 "%d"))
-
 ;;Macro For Quick Buffer Switching
 (fset 'switcheroo
       (kmacro-lambda-form [?i ?\C-x ?b ?\C-m escape] 0 "%d"))
@@ -33,9 +29,33 @@
 (fset 'kill-outside-parens
    (kmacro-lambda-form [?v ?% ?x] 0 "%d"))
 
-;;Macro For Backw0rds Delete
-(fset 'delete-backw0rds
-   (kmacro-lambda-form [?d ?v ?b] 0 "%d"))
+;; ACLAIMANT TESTING MACROS
+;;
+;;Macro for using transaction fn, fully qualified name included
+(fset 'schema-fn-fq
+   (kmacro-lambda-form [?i ?\( ?c backspace ?a ?c ?l ?a ?i ?m ?a
+   ?n ?t ?. ?c backspace ?s ?e ?r ?v ?i ?c ?e ?s ?. ?c ?o ?r ?e
+   ?. ?d ?e ?b ?. ?c ?u ?s ?t ?o ?m ?e ?r ?- ?s ?c ?h ?e ?m ?a
+   ?. ?f ?n ?s ?/ ?t ?r ?a ?n ?s ?a ?c ?t ?i ?o ?n ?- ?i ?n ?- ?s
+   ?c ?h ?e ?m ?a ?  ?\" ?s ?c ?h ?e ?m ?a ?\C-f ?  ?\( escape]
+   0 "%d"))
+
+;;Macro for using transaction fn, UNQUALIFIED 
+(fset 'schema-fn-uq
+   (kmacro-lambda-form [?i ?\( ?c ?u ?s ?t ?o ?m ?e ?r ?- ?s ?c
+   ?h ?e ?m ?a ?. ?f ?n ?s ?/ ?t ?r ?a ?n ?s ?a ?c ?t ?i ?o ?n ?-
+   ?i ?n ?- ?s ?c ?h ?e ?m ?a ?  ?\" ?s ?c ?h ?e ?m ?a ?\C-f ?
+   ?\( escape] 0 "%d"))
+
+
+
+(fset 'customer-schema-fns
+   (kmacro-lambda-form [?i ?\( ?c ?u ?s ?t ?o ?m ?e ?r ?- ?s ?c
+   ?h ?e ?m ?a ?. ?f ?n ?s ?/ ?t ?r ?a ?n ?c backspace ?s ?a ?c
+   ?t ?i ?o ?n ?- ?n backspace ?i ?n ?- ?s ?c ?h ?e ?m ?a ?  ?\"
+   ?c ?o ?m ?p ?a ?n ?y ?- ?s ?l ?u ?g ?\C-f ?  ?\( ?f ?n ?- ?n
+   ?a ?m ?e ?  ?# ?u ?u ?i ?d ?  ?\" ?u ?u ?i ?d ?\C-f ?  ?\{ ?:
+   ?p ?a ?y ?l ?o ?a ?d escape] 0 "%d"))
 
 ;;Macros For Assigning Incoming Data to a Symbol
 (fset 'def-incoming-data-clean
@@ -48,15 +68,21 @@
    backspace backspace backspace backspace backspace backspace
    backspace ?j backspace escape ?j ?V ?x] 0 "%d"))
 
-(fset 'def-incoming-comment-playground
-   (kmacro-lambda-form [?y ?t ?  ?O escape ?O ?\( ?c ?o ?m ?m ?e
-   ?n ?t return return escape ?k ?i tab ?\( ?d ?e ?c ?l ?a ?r ?e
-   ?  ?i ?n ?c ?o ?m ?i ?n ?g ?- ?d ?a ?t ?a ?- ?1 escape ?o ?\(
-   ?d ?c backspace ?e ?c ?l ?a ?r ?e ?  escape ?p escape ?o
-   return ?\( ?p ?r ?i ?n ?t ?l ?n ?  ?i ?n ?c ?o ?m ?i ?n ?g ?-
-   ?d ?a ?t ?a ?- ?1 escape ?o ?\( ?a ?p ?p ?l ?y ?  escape ?p ?a
-   ?  ?i ?n ?c ?o ?m ?i ?n ?g ?- ?d ?a ?t ?a ?- ?1 escape ?j
+(fset 'comment-playgrnd
+   (kmacro-lambda-form [?  ?x ?l ?O ?\( ?c ?o ?m ?m ?e ?n ?t
+   return return escape up ?i tab ?\( ?d ?e ?c ?l ?a ?r ?e ?  ?i
+   ?n ?c ?o ?m ?i ?n ?g ?- ?d ?a ?t ?a ?- ?1 ?\C-f return ?\( ?d
+   ?e ?c ?l ?a ?r ?e escape ?a ?i backspace ?  ?j ?j backspace
+   backspace escape ?p escape ?o return ?\( ?a ?p ?p ?l ?y
+   backspace backspace backspace backspace backspace backspace ?p
+   backspace ?\( ?c ?l ?o ?j ?u ?r ?e ?. ?p ?p ?r ?i ?n ?t ?/ ?p
+   ?p ?r ?i ?n ?t ?  ?i ?n ?c ?o ?i backspace ?, ?i backspace
+   backspace ?m ?i ?n ?g ?- ?d ?a ?t ?a ?- ?1 ?j ?j backspace
+   backspace escape ?o ?\( ?a ?p ?p ?l ?y ?  ?j ?j backspace
+   backspace escape right ?p ?u left ?p right ?i ?  ?i ?n ?c ?o
+   ?m ?i ?n ?g ?- ?d ?a ?t ?a ?- ?1 escape ?j ?O escape ?u ?j ?O
    escape] 0 "%d"))
+
 
 ;;Clear REPL Buffer
 (add-hook 'cider-repl-mode-hook
@@ -117,7 +143,8 @@
  "1"  'delete-other-windows
  "2"  'split-window-below
  "3"  'split-window-right
- "9"  'switcheroo       ;;switch btw current & last buffer
+ "8"  'evil-jump-backward
+ "9"  'switcheroo       ;;Switch btw current & last buffer
  "mx" 'counsel-M-x
  "s"  'save-some-buffers
  "b"  'ivy-switch-buffer ;;switch Buffer
@@ -130,7 +157,7 @@
  "}"  'move-forward-curlyParen
 
  ;;Great Shit That I Need So Much
- "r" 'delete-backw0rds
+ "r" 'backward-kill-word
  "j" 'the-ultimate-stapler
 
  ;;Search and Go-To
@@ -150,7 +177,7 @@
  "ltt"  'lsp-clojure-thread-last
  "ltf"  'lsp-clojure-thread-first-all
  "ltl"  'lsp-clojure-thread-last-all
- "luw"  'lsp-clojure-unwind-thread
+ "lut"  'lsp-clojure-unwind-thread
  "lua"  'lsp-clojure-unwind-all
  "lml"  'lsp-clojure-move-to-let
  "lil"  'lsp-clojure-introduce-let
@@ -178,19 +205,21 @@
  "kb" 'sp-backward-kill-sexp
  "ki" 'kill-inside-parens
  "ko" 'kill-outside-parens
+ "kr" 'raise-sexp
 
  ;;Cider
  "cj" 'cider-jack-in-clj                   ;;Cider ~J~ack in
  "cs" 'cider-jack-in-cljs                  ;;Cider jack in clojure~S~cript
  "ca" 'cider-jack-in-clj&cljs              ;;Cider jack in ~A~ll 
  "cb" 'cider-repl-clear-buffer             ;;Cider 'C'lear Buffer
- "cl" 'eval-cider-from-last-line           ;;Cider evaluate line
  "ci" 'cider-eval-defun-at-point           ;;Cider evaluate expression from Inside s-exp
  "cr" 'cider-load-buffer                   ;;Cider Recompile buffer
  "ctr" 'cider-insert-last-sexp-in-repl     ;;Cider Copy s-exp into REPL
  "cc" 'cider-pprint-eval-defun-to-comment  ;;Add the result as a comment underneath
  "cn" 'cider-repl-set-ns                   ;;Fuzzy Find NS available
  "cq" 'cider-quit
+ "cl" 'cider-eval-defun-at-point
+ "cp" 'cider-pprint-eval-defun-at-point
 
  ;;Magit
  "mg" 'magit-status ;;opens Magit
@@ -203,10 +232,7 @@
  "xp" 'simpleclip-paste
  "xl" 'copy-up-to-end-of-line ;;equivalent to VIM's y$
  "xx" 'simple-clip-select-all-copy  ;;copy entire buffer
- "xg" 'def-incoming-data-clean ;;{g}rab incoming data from request and assign it to a variable
- "xu" 'undo-incoming-data-def
- "x=" 'def-incoming-comment-playground 
- 
+
  ;;Formatting
  "xt" 'indent-region  ;;TAB section
  "xf" 'fill-paragraph ;;FORMAT long string
@@ -219,6 +245,12 @@
  "ad" 'aclaimant-jack-in-dashboard
  "aa" 'aclaimant-jack-in-alerter
  "ac" 'aclaimant-cider-connection
+ ;;Aclaimant testing 
+ "a-g"  'def-incoming-data-clean ;;{g}rab incoming data from request and assign it to a variable
+ "a-u"  'undo-incoming-data-def
+ "a-c"  'comment-playgrnd
+ "a-sf" 'schema-fn-fq
+ "a-su" 'schema-fn-uq
 
  ;;Evil Numbers
  "=" 'evil-numbers/inc-at-pt

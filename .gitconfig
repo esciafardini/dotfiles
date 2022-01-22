@@ -1,6 +1,6 @@
 # This is Git's per-user configuration file.
 [user]
-	name = Edward Ciafardini
+	name = esciafardini
 	email = Esciafardini@gmail.com
 [core]
 	editor = code --wait

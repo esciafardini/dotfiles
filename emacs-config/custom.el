@@ -40,4 +40,9 @@
 (setq mac-command-modifier 'none
       mac-option-modifier 'meta)
 
+;;Cider BS 
+(setq cider-interactive-eval-output-destination 'output-buffer)
+(setq cider-redirect-server-output-to-repl nil)
+(setq clojure-toplevel-inside-comment-form t)
+(setq cider-repl-pop-to-buffer-on-connect nil)
 ;;; custom.el ends here

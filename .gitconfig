@@ -1,0 +1,40 @@
+# This is Git's per-user configuration file.
+[user]
+	name = esciafardini
+	email = edward.ciafardini@aclaimant.com
+
+[core]
+	editor = nvim
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	excludesfile = /Users/remote-dev/.gitignore
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[merge]
+	ff = false
+[pull]
+  rebase = true
+[alias]
+	a = add
+	cm = commit -m
+	s = status
+	sw = switch
+	st = stash
+	d = diff
+  co = checkout
+	l = log --oneline
+	ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --retty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+	rb = rebase
+	rbi = rebase --interactive @{upstream}
+	log-my-week = !git log --author $(git config user.email) --since "1 week ago"	log-graph = log --graph --all  --decorate --oneline
+	grep-group =  grep --break --heading --line-number
+	grep-all = !"git rev-list --all | xargs git grep '$1'"
+	rewrite = commit --amend --message
+	uncommit = reset --soft HEAD~1
+	branches = branch -a
+	stashes = stash list
+	tags = tag -n1 --list
+  lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg1"
